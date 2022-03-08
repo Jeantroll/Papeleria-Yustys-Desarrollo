@@ -326,15 +326,59 @@ input:checked + .slider:before {-webkit-transform: translateX(26px);-ms-transfor
                   <a class="navbar-brand flex-shrink-0" href="#"><img style="width: 230px;" src="https://i.ibb.co/GQq4kNr/e558a424-10c4-43c2-846d-5d35fc76c6b3.png" alt="logo-image" class="img-fluid">
                   </a>
                   <div class="header-content d-flex align-items-center justify-content-end">
-                    <form class="d-flex justify-content-end align-items-center">
-                      <div class="search-icon">
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+                      <div class="container">
+                          <a class="navbar-brand" href="{{ url('/') }}">
+                              {{ config('app.name', 'Laravel') }}
+                          </a>
+                          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                              <span class="navbar-toggler-icon"></span>
+                          </button>
+          
+                          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                              <!-- Left Side Of Navbar -->
+                              <ul class="navbar-nav me-auto">
+          
+                              </ul>
+          
+                              <!-- Right Side Of Navbar -->
+                              <ul class="navbar-nav ms-auto">
+                                  <!-- Authentication Links -->
+                                  @guest
+                                      @if (Route::has('login'))
+                                          <li class="nav-item">
+                                              <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                          </li>
+                                      @endif
+          
+                                      @if (Route::has('register'))
+                                          <li class="nav-item">
+                                              <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                          </li>
+                                      @endif
+                                  @else
+                                      <li class="nav-item dropdown">
+                                          <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                              {{ Auth::user()->name }}
+                                          </a>
+          
+                                          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                              <a class="dropdown-item" href="{{ route('logout') }}"
+                                                 onclick="event.preventDefault();
+                                                               document.getElementById('logout-form').submit();">
+                                                  {{ __('Logout') }}
+                                              </a>
+          
+                                              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                  @csrf
+                                              </form>
+                                          </div>
+                                      </li>
+                                  @endguest
+                              </ul>
+                          </div>
                       </div>
-                      
-                    </form>
-                    <a herf="#" class="profile"><img src="https://yudiz.com/codepen/nft-store/user-pic1.svg" alt="user-image">Administrador</a>
-                    <a href="#" class="notification"><i class="fa fa-bell" aria-hidden="true"></i></a>
+                  </nav>
         
                   </div>
                 </div>
