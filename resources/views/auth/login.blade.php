@@ -136,17 +136,17 @@ body {
     <form method="POST" action="{{ route('login') }}">
         <!-- USER NAME-->
     <label for="username">Usuario</label>
-    <input type="text" placeholder="Ingresa tu usuario">
+    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
     <!-- PASSWORD-->
 
     <label for="password">Contraseña</label>
     <a href="#">¿Haz olvidado tu contraseña?</a>
-    <input type="password" placeholder="Ingresa tu contraseña">
+    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
     <input  type="submit" value="INICIAR SESIÓN">
 
     </form>
-   
+
 </div>
 @endsection
