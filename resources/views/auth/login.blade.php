@@ -144,9 +144,18 @@ body {
     <a href="#">¿Haz olvidado tu contraseña?</a>
     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
-    <input  type="submit" value="INICIAR SESIÓN">
+    <div class="col-md-8 offset-md-4">
+        <button type="submit" class="btn btn-primary">
+            {{ __('Login') }}
+        </button>
+
+        @if (Route::has('password.request'))
+            <a class="btn btn-link" href="{{ route('password.request') }}">
+                {{ __('Forgot Your Password?') }}
+            </a>
+        @endif
+    </div>
 
     </form>
-
 </div>
 @endsection
