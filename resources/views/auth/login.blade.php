@@ -38,7 +38,7 @@ body {
 .cuadro-img .logo {
     width: 250px;
     height: 110px;
-    margin-left: 43%;
+    margin-left:43%;
 
 
 }
@@ -90,7 +90,7 @@ body {
     
 
 }
-.form-login input[type="text"]{
+.form-login input[type="email"]{
 
     margin-top: 10px;
     padding: 10px 5px 10px 5px;
@@ -101,39 +101,46 @@ body {
 
 .form-login a {
     text-decoration: none;
-    font-size: 15px;
+    font-size: 13px;
     margin-left: 160px;
    
    
 
 }
-
-
 .form-login input[type="submit"] {
 
 
     background-color: #46d9d0;
-    padding: 15px 0 15px;
+    padding: 10px 0 10px;
     border-radius: 10px;
     border: 1px solid #000;
-    font-size: 12px;
+    font-size: 17px;
+
+}
+
+@media (max-width: 564px){
+    .logo{
+        margin-left: 170px;
+    }
     
 
 }
 
+
 </style>
-<div class="container">
+<div class="container" style="padding-left: 0px;padding-right: 0px;">
 <header> 
     <div class="cuadro-img"> 
-        <img class="logo" src="/img/LOGO PAPELERIA.jpeg" alt="LogoPapeleria">
+        <img class="logo" src="https://i.ibb.co/GQq4kNr/e558a424-10c4-43c2-846d-5d35fc76c6b3.png" alt="LogoPapeleria">
     </div>
 </header>
 
-    <div class="form-login">
-    <img class="avatar" src="/img/IMAGEN USUARIO.jpg" alt="Usuario">
-    <h1>Bienvenido</h1>
+    <div class="form-login" style="height: 510px;">
+    <i style=" font-size: 80px; width: 100px;height: 100px;padding: 0;border-radius: 50%;position: absolute;top: 40px;left: calc(50% - 40px);" class="fa-solid fa-user"></i>
+    <h1 style="padding-top: 68px;">Bienvenido</h1>
 
     <form method="POST" action="{{ route('login') }}">
+        @csrf
         <!-- USER NAME-->
     <label for="username">Usuario</label>
     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -141,21 +148,14 @@ body {
     <!-- PASSWORD-->
 
     <label for="password">Contraseña</label>
-    <a href="#">¿Haz olvidado tu contraseña?</a>
+    @if (Route::has('password.request'))
+
+    <a href="{{ route('password.request') }}">{{ __('¿Haz olvidado tu contraseña?') }}</a>
+    @endif
+
     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
-    <div class="col-md-8 offset-md-4">
-        <button type="submit" class="btn btn-primary">
-            {{ __('Login') }}
-        </button>
-
-        @if (Route::has('password.request'))
-            <a class="btn btn-link" href="{{ route('password.request') }}">
-                {{ __('Forgot Your Password?') }}
-            </a>
-        @endif
-    </div>
-
+        <input type="submit" class="btn btn-primary" value="Ingresar">
     </form>
 </div>
 @endsection
