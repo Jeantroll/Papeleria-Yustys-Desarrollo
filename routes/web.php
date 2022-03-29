@@ -1,4 +1,6 @@
 <?php
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Route;
 
@@ -19,8 +21,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('inventario-principal','App\Http\Controllers\inventario\inventarioController@inventarioIndex');
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});

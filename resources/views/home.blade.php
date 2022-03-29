@@ -2,6 +2,5 @@
 
 @section('content')
 
-<h1 style="color:black;">Papeleria Yustýs</h1>
-
+<h3 style="color:black;">Bienvenido... Da click en algún apartado de pages para navegar</h3>
 @endsection
