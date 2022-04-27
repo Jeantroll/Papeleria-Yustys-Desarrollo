@@ -1,14 +1,12 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
+    <title>Papeleria-Yusty´s</title>
+    <link rel="icon" href="https://i.ibb.co/GQq4kNr/e558a424-10c4-43c2-846d-5d35fc76c6b3.png">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,9 +32,9 @@
         <ul>
             <li><p>Pages</p></li>
 
-            <li><a href="/inventario-principal"><i style="margin-right: 13px;" class="fa-solid fa-boxes-stacked"></i> Inventario</a></li>
-            <li><a href=""><i style="margin-right: 18px;" class="fa-solid fa-file-invoice-dollar"></i> Factura</a></li>
-            <li><a href=""><i style="margin-right: 13px;" class="fa-solid fa-cart-shopping"></i> Venta</a></li>
+            <li><a href="/inventario-principal" class="inventario"><i style="margin-right: 13px;" class="fa-solid fa-boxes-stacked"></i> Inventario</a></li>
+            <li><a href="" class="factura"><i style="margin-right: 18px;" class="fa-solid fa-file-invoice-dollar"></i> Factura</a></li>
+            <li><a href="/ventas" class="venta"><i style="margin-right: 13px;" class="fa-solid fa-cart-shopping"></i> Venta</a></li>
             <li style="margin-left: 0px;margin-right: 25px;"> <a class="btn btn-primary" style="text-align: left; border-radius: 4px; width: 100%; color: #039A49; background: rgba(61, 206, 128, 0.28); border: none;" href=""><i style="margin-right: 13px;" class="fa-solid fa-users"></i> Usuarios</a></li>
             <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
               document.getElementById('logout-form').submit();"><i style="margin-right: 13px;" class="fa-solid fa-arrow-right-from-bracket"></i> Salir</a></li>

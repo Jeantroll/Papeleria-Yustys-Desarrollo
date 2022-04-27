@@ -24,6 +24,14 @@ Auth::routes();
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('inventario-principal','App\Http\Controllers\inventario\inventarioController@inventarioIndex');
+    Route::get('editar-inventario','App\Http\Controllers\inventario\inventarioController@editInventory');
+    Route::get('añadir-producto','App\Http\Controllers\inventario\inventarioController@addProductIndex');
+    Route::post('añadir-producto-inventario','App\Http\Controllers\inventario\inventarioController@addProduct');
+
+    //Venta seccioón
+    Route::get('ventas','App\Http\Controllers\venta\ventaController@ventaIndex');
+
+    
 
 
 });
