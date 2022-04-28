@@ -33,7 +33,7 @@
             <li><p>Pages</p></li>
 
             <li><a href="/inventario-principal" class="inventario"><i style="margin-right: 13px;" class="fa-solid fa-boxes-stacked"></i> Inventario</a></li>
-            <li><a href="" class="factura"><i style="margin-right: 18px;" class="fa-solid fa-file-invoice-dollar"></i> Factura</a></li>
+            <li><a href="/facturas" class="factura"><i style="margin-right: 18px;" class="fa-solid fa-file-invoice-dollar"></i> Factura</a></li>
             <li><a href="/ventas" class="venta"><i style="margin-right: 13px;" class="fa-solid fa-cart-shopping"></i> Venta</a></li>
             <li style="margin-left: 0px;margin-right: 25px;"> <a class="btn btn-primary" style="text-align: left; border-radius: 4px; width: 100%; color: #039A49; background: rgba(61, 206, 128, 0.28); border: none;" href=""><i style="margin-right: 13px;" class="fa-solid fa-users"></i> Usuarios</a></li>
             <li><a href="{{ route('logout') }}" onclick="event.preventDefault();

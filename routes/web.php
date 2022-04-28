@@ -28,10 +28,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('añadir-producto','App\Http\Controllers\inventario\inventarioController@addProductIndex');
     Route::post('añadir-producto-inventario','App\Http\Controllers\inventario\inventarioController@addProduct');
 
-    //Venta seccioón
+    //Venta sección
     Route::get('ventas','App\Http\Controllers\venta\ventaController@ventaIndex');
 
-    
+    //Facturas sección
+    Route::get('facturas','App\Http\Controllers\factura\facturaController@facturaIndex');
+
 
 
 });
