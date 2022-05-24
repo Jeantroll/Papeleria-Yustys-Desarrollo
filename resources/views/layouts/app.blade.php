@@ -33,9 +33,11 @@
             <li><p>Pages</p></li>
 
             <li><a href="/inventario-principal" class="inventario"><i style="margin-right: 13px;" class="fa-solid fa-boxes-stacked"></i> Inventario</a></li>
+            <li><a href="/proveedores" class="proveedor"><i style="margin-right: 13px;" class="fa-solid fa-truck-field"></i> Proveedores</a></li>
+
             <li><a href="/facturas" class="factura"><i style="margin-right: 18px;" class="fa-solid fa-file-invoice-dollar"></i> Factura</a></li>
             <li><a href="/ventas" class="venta"><i style="margin-right: 13px;" class="fa-solid fa-cart-shopping"></i> Venta</a></li>
-            <li style="margin-left: 0px;margin-right: 25px;"> <a class="btn btn-primary" style="text-align: left; border-radius: 4px; width: 100%; color: #039A49; background: rgba(61, 206, 128, 0.28); border: none;" href=""><i style="margin-right: 13px;" class="fa-solid fa-users"></i> Usuarios</a></li>
+            <li> <a class="usuarios" href=""><i style="margin-right: 13px;" class="fa-solid fa-users"></i>Administrar Usuarios</a></li>
             <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
               document.getElementById('logout-form').submit();"><i style="margin-right: 13px;" class="fa-solid fa-arrow-right-from-bracket"></i> Salir</a></li>
 
@@ -58,9 +60,8 @@
                 <i id="open" class="fa-solid fa-bars"></i>
                 <i id="close" class="fa-solid fa-x"></i>
             </div>
-            <div class="search">
-                <i class="fas fa-search"></i>
-                <input type="text">
+            <div>
+                <h4 style="color: white;">Fecha: {{ Carbon\Carbon::now()->locale('es')->isoFormat('LL') }}</h4>
             </div>
             </div>
             <div class="person">

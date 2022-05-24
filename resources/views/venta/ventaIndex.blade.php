@@ -9,6 +9,16 @@
     }
 </style>
 
+@if($error)
+	<div class="row">
+		<div class="col-md-12">
+			<div class="alert alert-danger alert-dismissible fade show" role="alert">
+				{{$msj}}
+			</div>
+		</div>
+	</div>
+	@endif
+
 <div class="container">
     <br>
     <br>
@@ -22,29 +32,120 @@
             <h4>Registrar venta</h4>
             </div>
             <br>
-            <img src="https://s3-alpha-sig.figma.com/img/a22b/8209/d8cbef9e50107c85c2739cde59130c5f?Expires=1652054400&Signature=f5vblw2BYDWEZF0NW5r8GHFcGvP8GUehCCSIpMzhTlHlWsxpeO0Y-tnJr3r4SgvMvOawdZ4yfyd86Z8I8PeEIIyvAbBCpp9igc9Z17y7y1wWc3Gj6BxzVyrYe3Y8N8SEFFgY5fScflkDcD95KzJgd9nVYACV~K4C7h-BC1Ybusw~RS2aEew-ixog1B-S~i6uFbgp-dWsXRfqeClr3YB98AO1kiCoOAAC1yud7hPZQyJmNBoAW4sMU4OBl2Ng4JuZYbGvrMCqy2uSmBoII0-L9Vzy585P2SqrDmYs6Y7wmJ1q7OAf7-ctSjbV3Rj1tBq1iP3w1aYRFWYW2XsEri7esw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA" alt="">
+            <img src="https://s3-alpha-sig.figma.com/img/a22b/8209/d8cbef9e50107c85c2739cde59130c5f?Expires=1653868800&Signature=Th~L-s1wDtDyYlVmSeQY6AFO9ImWh88ZHhDUNYcQZaA87cIARv91Dds3e0GIAXxeZQdDwZ3FlmekG5xMNeLUL5rrkzsK7HXmQnXotqiVhTQ00RurWIpyLCaKAb3TmtK99zadvtrnJAH4ZnAQDbCvW1GaKt9Ttdsjkl2kR3P8CJIThuS2Ako1KpSiHVvMaioRjM40mbzdJa1uuR34aogk1OOYwNJQ-qRVm~-aHRD7rh8y2syrYE7dFJl9oi2JNYteAwOsqNRcqYhjoeQpw2bSDPpvsfdfcul68tnxfcZHla-cu3EtsIYGP-q0pMOLSgLL-fZmEjrKBFJcPyymFTfr5g__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA" alt="">
         </div>
         <div class="col-md-7">
-
-            <input style="background: #C9F1DB !important; color: #47B87B; font-weight: bold;" type="text" value="Documento cliente" class="w-50 h-22 form-control" id="inputGroupFile01">
+            <form action="/crear-venta" method="POST">
+             @csrf
+            <input name="documentoCliente" style="background: #C9F1DB !important; color: #47B87B; font-weight: bold;" type="text" placeholder="Documento cliente" class="w-50 h-22 form-control" id="inputGroupFile01">
             <br>
-            <input style="background: #C9F1DB !important; color: #47B87B; font-weight: bold;" type="text" value="Nombre cliente" class="w-50 h-22 form-control" id="inputGroupFile01">
+            <input name="NombreCliente" style="background: #C9F1DB !important; color: #47B87B; font-weight: bold;" type="text" placeholder="Nombre cliente" class="w-50 h-22 form-control" id="inputGroupFile01">
             <br>
-            <select style="background: #C9F1DB !important; color: #47B87B; font-weight: bold;" class="w-50 h-22 form-select" aria-label="Default select example">
-                <option selected>Tipo identificación</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+            <select name="Idproduct" onchange="parseCantidad()" id="idProd" style="background: #C9F1DB !important; color: #47B87B; font-weight: bold;" class="w-50 h-22 form-select" aria-label="Default select example">
+                <option selected>Producto *</option>
+                @foreach ($producto as $pr)
+                <option value="{{$pr->idProducto }}">{{$pr->nombre}}</option>
+                @endforeach
               </select>
             <br>
-            <input style="background: #C9F1DB !important; color: #47B87B; font-weight: bold;" type="text" value="Cantidad" class="w-50 h-22 form-control" id="inputGroupFile01">
+            <input name="cantidad" onchange="parseCantidad()" required style="background: #C9F1DB !important; color: #47B87B; font-weight: bold;" type="text" placeholder="Cantidad *" class="w-50 h-22 form-control" id="cantidad">
+            <input type="hidden" id="totalR" name="total">
             <br>
-            <input style="background: #C9F1DB !important; color: #47B87B; font-weight: bold;" type="text" value="Total" class="w-50 h-22 form-control" id="inputGroupFile01">
+            <input id="total" required style="background: #C9F1DB !important; color: #47B87B; font-weight: bold;" type="text" placeholder="Total *" class="w-50 h-22 form-control" id="inputGroupFile01" disabled>
             <br>
-            <button style="background: #0EC3C7 !important; border-color: #0EC3C7 !important; border-radius: 50px; width: 200px !important;font-size: 20px !important; " type="button" class="btn btn-primary">Confirmar venta</button>
+            <input type="hidden" name="totalNeto">
+            <div class="row">
+                    <button id="buttonVenta" style="background: #0EC3C7 !important; border-color: #0EC3C7 !important; border-radius: 50px; width: 200px !important;font-size: 20px !important; margin-right: 15px; " type="submit" class="btn btn-primary">Crear venta</button>
+            </form>
+                    <button id="buttonVenta" style="background: #0EC3C7 !important; border-color: #0EC3C7 !important; border-radius: 50px; width: 200px !important;font-size: 20px !important; " type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Retomar venta</button>
+            </div>
+
         </div>
 
         </div>
     </div>
+    </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Retomar la venta</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form method="POST" action="/retomar-venta">
+            @csrf
+        <div class="modal-body" method="POST" action="/retomar-venta">
+            <div class="row">
+                <center>
+                    <h3>Escribe el numero id de la factura en proceso</h3>
+                    <br>
+                <br>
+                </center>
+                
+                <div class="row">
+                        <input type="number" id="precio" class="form-control" name="idFactura" value="" required placeholder="Id de factura ejemplo (1)">
+                </div>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+    </form>
+      </div>
+    </div>
+  </div>
+
+<script>
+
+function consultarTotal(idprod, cantidad){
+
+let headers = new Headers();
+      
+      if(idprod == null && cantidad == null){
+          var ajaxurl = "http://localhost:8000/api/sumar-producto/0/0";
+      }else{
+          var ajaxurl = "http://localhost:8000/api/sumar-producto/"+idprod+"/"+cantidad;
+      }
+
+      fetch(ajaxurl, {
+              //mode: 'no-cors',
+              //credentials: 'include',
+              method: 'GET',
+              headers: headers
+      })
+      .then(function(response) {
+          return response.text();
+      })
+      .then(function(data) {
+
+          var data = JSON.parse(data);
+
+          if(data.success){
+                var total = document.getElementById('total').value = data.data;
+                var totalR = document.getElementById('totalR').value = data.data;
+
+                document.getElementById('buttonVenta').disabled = false;
+
+                console.log(data);
+            }else{
+                alert(data.data);
+                var total = document.getElementById('total').value = '0';
+                document.getElementById('buttonVenta').disabled = true;
+       
+            }
+    })
+}
+
+function parseCantidad() {
+    var idprod = document.getElementById('idProd').value;
+    var cantidad = document.getElementById('cantidad').value;
+
+    consultarTotal(idprod, cantidad)
+}
+
+</script>
 @endsection

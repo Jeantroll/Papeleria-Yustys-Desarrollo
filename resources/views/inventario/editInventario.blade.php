@@ -4,6 +4,8 @@
 
 <div class="container">
     <div class="card" >
+      <form action="/producto-editado" method="POST">
+      @csrf
         <div class="card-body">
             <h1><i class="fa-solid fa-file-pen" style="color: #3AE8E8;"></i>  Editar producto</h1>
             <br>
@@ -31,7 +33,7 @@
                   <label for="cantidad" class="col-form-label">Cantidad</label>
                 </div>
                 <div class="col-md-10">
-                  <input type="number" id="cantidad" class="form-control" name="cantidad" value="{{$invEdit->cantidad}}" required>
+                  <input type="number" onchange="validateItem();" id="cantidad" class="form-control" name="cantidad" value="{{$invEdit->cantidad}}" required>
                 </div>
               </div>
               <br>
@@ -59,14 +61,30 @@
               </div>
               @endforeach
               <br>
+              <input type="hidden" name="id" value="{{$invEdit->idProducto}}">
               <center>
-              <button type="button" class="btn btn-info" style="color: white; font-size: 25px;">Guardar cambios <i class="fa-solid fa-floppy-disk"></i></button>
+              <button type="submit" id="save" class="btn btn-info" style="color: white; font-size: 25px;">Guardar cambios <i class="fa-solid fa-floppy-disk"></i></button>
             </center>
         </div>
+      </form>
+
       </div>   
         
 
 </div>
+
+<script>
+  function validateItem() {
+      var quantity = document.getElementById('cantidad').value
+
+      if (quantity === 0 || quantity === '0') {
+        alert('La cantidad no puede ser 0');
+        document.getElementById('save').disabled = true;
+      }else{
+        document.getElementById('save').disabled = false;
+      }
+  }
+</script>
 
 
 @endsection

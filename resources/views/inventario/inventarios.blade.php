@@ -88,7 +88,23 @@
     </thead>
     <tbody>
       @foreach ($inventario as $inv)          
+      @if ($inv->cantidad <= 0)
+      <tr style="background: #ff0000; color: white;">
+        <td>{{$inv->idProducto }}</td>
+        <td>{{$inv->nombre}}</td>
+        <td>{{$inv->marca}}</td>
+        <td>{{$inv->cantidad}}</td>
+        <td>{{$inv->precio}}</td>
+        <td>{{$inv->nombreCompañia}}</td>
 
+        <td>
+              <form action="/editar-inventario" method="GET">
+                <input type="hidden" name="idProduct" value="{{$inv->idProducto}}">
+                <button type="submit" class="btn btn-info" style="color:white; margin-right: 25px;"><i class="fa-solid fa-pen-to-square"></i></button>
+              </form>
+          
+      </tr>
+      @else
       <tr>
         <td>{{$inv->idProducto }}</td>
         <td>{{$inv->nombre}}</td>
@@ -97,16 +113,61 @@
         <td>{{$inv->precio}}</td>
         <td>{{$inv->nombreCompañia}}</td>
 
-        <td><form action="/editar-inventario" method="GET">
-          <input type="hidden" name="idProduct" value="{{$inv->idProducto}}">
-          <button type="submit" class="btn btn-info" style="color:white; margin-right: 25px;">Editar <i class="fa-solid fa-pen-to-square"></i></button>
-          </form>
-          <button type="button" class="btn btn-danger">Eliminar <i class="fa-solid fa-trash-can"></i></button></td>
+        <td>
+          <div class="row">
+            <div class="col-md-6">
+              <form action="/editar-inventario" method="GET">
+                <input type="hidden" name="idProduct" value="{{$inv->idProducto}}">
+                <button type="submit" class="btn btn-info" style="color:white; margin-right: 25px;"><i class="fa-solid fa-pen-to-square"></i></button>
+              </form>
+            </div>
+            <div class="col-md-6">
+              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="giveQuantity({{$inv->cantidad}},{{$inv->idProducto}});">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+
+          </div>
+          
       </tr>
+      @endif
+
       @endforeach
     </tbody>
   </table>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Eliminar items</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form name="cart_quantity" method="POST" action="/eliminar-item">
+        @csrf
+      <div class="modal-body">
+          <div class="row">
+          <center>
+          <label for="quantity" class="form-label">Configura la cantidad de items</label>
+          <input name="quantitys" class="form-control" id="quantity" size="4" onChange="UpdateCartQuantity();" />
+              <a href="javascript:changeQuantity(-1)" style="text-decoration:none; color: green;"><i class="fa-solid fa-minus"></i></a>
+          <input type="hidden" name="idProduct" id="idProduct">
+          </center>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+      </div>
+    </form>
+
+    </div>
+  </div>
+</div>
+
 @if($succes)
 <script>
     window.location.replace("/inventario-principal");
@@ -114,6 +175,15 @@
 @endif
 
 <script>
+function giveQuantity(quantity, id) {
+  document.getElementById('quantity').value = quantity;
+  document.getElementById('idProduct').value = id;
+}
+
+function changeQuantity(qty) {
+    document.cart_quantity['quantity'].value = Number(document.cart_quantity['quantity'].value)+Number(qty);
+    UpdateCartQuantity();
+}
   function downloadIcons() {
     if (document.getElementById('pdf').style.display == "none") {
       document.getElementById('pdf').style.display = "block"
