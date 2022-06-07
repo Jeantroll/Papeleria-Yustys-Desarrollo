@@ -87,8 +87,29 @@ class facturaController extends Controller
             }
         }
 
-        
-
         return view('factura.facturaIndex',['factura'=>$factura,'succses'=>$succses]);
+    }
+
+    public function facturaprint(Request $request){
+
+        $id = $request->get('id');
+
+        $productsFact = \DB::connection('mysql')
+        ->table('factura_logs_fi')
+        ->where('id_factura', $id)
+        ->get();
+
+        $totalNeto = 0;
+        foreach ($productsFact as $product) {
+            $totalNeto += $product->valor_total;
+        }
+        
+        $facturaGets = \DB::connection('mysql')
+        ->table('factura')
+        ->where('idfactura',$id)
+        ->get();
+
+        return view('venta.factura',['facturaGets'=>$facturaGets,'productsFact'=>$productsFact,'totalNeto'=>$totalNeto]);
+
     }
 }

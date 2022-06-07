@@ -27,21 +27,22 @@
         <div class="col-md-7">
             <form action="/preventa" method="POST">
              @csrf
-            <input name="documentoCliente" style="background: #C9F1DB !important; color: #47B87B; font-weight: bold;" type="text" placeholder="Documento cliente" class="w-50 h-22 form-control" id="inputGroupFile01">
+            <input name="documentoCliente" type="text" placeholder="Documento cliente" class="w-50 h-22 form-control" id="inputGroupFile01">
             <br>
-            <input name="NombreCliente" style="background: #C9F1DB !important; color: #47B87B; font-weight: bold;" type="text" placeholder="Nombre cliente" class="w-50 h-22 form-control" id="inputGroupFile01">
-            <br>
-            <select name="Idproduct" onchange="parseCantidad()" id="idProd" style="background: #C9F1DB !important; color: #47B87B; font-weight: bold;" class="w-50 h-22 form-select" aria-label="Default select example">
+            <input name="NombreCliente" type="text" placeholder="Nombre cliente" class="w-50 h-22 form-control" id="inputGroupFile01">
+            <br>                
+              <select name="Idproduct" onchange="parseCantidad()" id="idProd" class="w-50 h-22 form-select">
                 <option selected>Producto *</option>
+
                 @foreach ($producto as $pr)
                 <option value="{{$pr->idProducto }}">{{$pr->nombre}}</option>
                 @endforeach
               </select>
             <br>
-            <input name="cantidad" onchange="parseCantidad()" required style="background: #C9F1DB !important; color: #47B87B; font-weight: bold;" type="text" placeholder="Cantidad *" class="w-50 h-22 form-control" id="cantidad">
+            <input name="cantidad" onchange="parseCantidad()" required type="text" placeholder="Cantidad *" class="w-50 h-22 form-control" id="cantidad">
             <input type="hidden" id="totalR" name="total">
             <br>
-            <input id="total" required style="background: #C9F1DB !important; color: #47B87B; font-weight: bold;" type="text" placeholder="Total *" class="w-50 h-22 form-control" id="inputGroupFile01" disabled>
+            <input id="total" required type="text" placeholder="Total *" class="w-50 h-22 form-control" id="inputGroupFile01" disabled>
             <br>
             <input type="hidden" name="totalNeto">
             <input type="hidden" name="idFactura" value="{{$preFactura}}">
@@ -114,6 +115,12 @@
 </div>
 
 <script>
+    var select_box_element = document.querySelector('#idProd');
+
+dselect(select_box_element, {
+    search: true
+});
+
     productosPre();
 
     let timerss;

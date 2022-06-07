@@ -20,4 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('sumar-producto/{idProd}/{cantidadProd}','App\Http\Controllers\venta\ventaController@webServiceTotalQuantity');
 Route::get('productopre/{idFactura}','App\Http\Controllers\venta\ventaController@webServiceQueryProductsFact');
-
+Route::get('/productsByName','App\Http\Controllers\venta\ventaController@getProductsByName')->name('products.getProductsByName');

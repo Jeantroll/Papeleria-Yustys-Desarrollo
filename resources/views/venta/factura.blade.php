@@ -32,9 +32,9 @@
 
             </div>
             <div class="col-md-4">
-                <p>Nit: xxxxxxx</p>
-                <p>Direccion: xxxxxxx</p>
-                <p>Telefono: +(57) xxxxxxx </p>
+                <p>Nit: 26425255-0</p>
+                <p>Direccion: calle 53#1 w 66</p>
+                <p>Telefono: +(57) 318 8113937 </p>
             </div>
             <div class="col-md-4">
                 

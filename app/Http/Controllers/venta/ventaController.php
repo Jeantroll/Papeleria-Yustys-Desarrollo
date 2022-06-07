@@ -308,6 +308,15 @@ class ventaController extends Controller
 
     }
 
+    public function getProductsByName(Request $request){
+
+        return \DB::connection('mysql')
+        ->table('producto')
+        ->select('nombre','idProducto')
+        ->where('nombre', 'like', "%{$request->term}%")
+        ->pluck('nombre');
+     }
+
     public function webServiceQueryProductsFact($idFactura){
 
         $productsPre = \DB::connection('mysql')

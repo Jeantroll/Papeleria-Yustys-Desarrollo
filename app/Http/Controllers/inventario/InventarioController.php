@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\inventario;
 
+use App\Exports\ProductExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
+
 
 class InventarioController extends Controller
 {
@@ -132,8 +136,12 @@ class InventarioController extends Controller
         
         //Editar item del producto
         //dd($cantidad);
+        $inventario = \DB::connection('mysql')
+        ->table('producto')
+        ->join('proveedor','proveedor.idproveedor','=','producto.proveedor_idproveedor')
+        ->get();
 
-        if($cantidad > 0){
+        if($cantidad >= 0){
             $itemDelete = \DB::connection('mysql')
             ->table('producto')
             ->where('idProducto',$id)
@@ -141,19 +149,24 @@ class InventarioController extends Controller
                 'cantidad' => $cantidad,
             ]);
         }else{
-            $itemDelete = \DB::connection('mysql')
-            ->table('producto')
-            ->where('idProducto',$id)
-            ->delete();
+            $msg = "Has escogido un valor negativo... Por favor revalida los datos con un valor positivo. Ejemplo: 1,2,3,4,5,6";
+            
+
+            return view('inventario/inventarios',['msg'=>$msg,'inventario'=>$inventario]);
         }
         //retornar vista y obtener datos
-        $inventario = \DB::connection('mysql')
-        ->table('producto')
-        ->join('proveedor','proveedor.idproveedor','=','producto.proveedor_idproveedor')
-        ->get();
-
-        //dd($inventario);
-
         return view('inventario/inventarios',['msg'=>$msg,'succes'=>$succes,'inventario'=>$inventario]);
+    }
+
+
+
+
+    //Exportar productos mediante CSV y EXCEL con la libreria Laravel-Excel
+
+    public function exportProductCSV(){
+
+        $nombreDocumento = 'productos papeleria yustys '.Carbon::now().'.xlsx';
+        
+        return Excel::download(new ProductExport, $nombreDocumento);
     }
 }

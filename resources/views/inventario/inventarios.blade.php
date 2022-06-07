@@ -36,7 +36,7 @@
 }
 
 </style>
-@if($succes)
+@if($msg != '')
 	<div class="row">
 		<div class="col-md-12">
 			<div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -64,7 +64,7 @@
     <div class="col-md-4">
       <div class="row">
         <div class="col-md-2" id="pdf" style="display: none;"><button type="button" class="btn btn-success bt-download" style="background: red; font-size: 25px;"><i class="fa-solid fa-file-pdf"></i></button></div>
-        <div class="col-md-2" id="csv" style="display:none;"><button type="button" class="btn btn-success bt-download" style="background: #224632; font-size: 25px;"><i class="fa-solid fa-file-csv"></i></button></div>
+        <div class="col-md-2" id="csv" style="display:none;"><a type="button" href="{{route('product.export')}}" class="btn btn-success bt-download" style="background: #224632; font-size: 25px;"><i class="fa-solid fa-file-csv"></i></a></div>
         <div class="col-md-8"><button type="button" onclick="downloadIcons()" class="btn btn-success bt-download" style="background: #3DCE80;">Descargar inventario <i class="fa-solid fa-download"></i></button></div>
 
       </div>
@@ -160,7 +160,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        <button onclick="clickeds()" type="button" class="btn btn-primary">Guardar cambios</button>
       </div>
     </form>
 
@@ -175,6 +175,15 @@
 @endif
 
 <script>
+
+function clickeds() {
+  Swal.fire(
+  'Good job!',
+  'You clicked the button!',
+  'success',
+  )
+}
+
 function giveQuantity(quantity, id) {
   document.getElementById('quantity').value = quantity;
   document.getElementById('idProduct').value = id;

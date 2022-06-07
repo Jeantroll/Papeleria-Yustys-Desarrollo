@@ -48,6 +48,10 @@ Route::group(['middleware' => ['auth']], function () {
     //Facturas sección
     Route::get('facturas','App\Http\Controllers\factura\facturaController@facturaIndex');
     Route::post('eliminar-factura', 'App\Http\Controllers\factura\facturaController@cancelFactura');
+    Route::post('factura-print', 'App\Http\Controllers\factura\facturaController@facturaprint');
 
+    //Exportar CSV
+    Route::get('/product/export','App\Http\Controllers\inventario\inventarioController@exportProductCSV')->name('product.export');
 
+    
 });
