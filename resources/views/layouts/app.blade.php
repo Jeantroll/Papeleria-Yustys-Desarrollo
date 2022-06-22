@@ -42,7 +42,9 @@
 
             <li><a href="/facturas" class="factura"><i style="margin-right: 18px;" class="fa-solid fa-file-invoice-dollar"></i> Factura</a></li>
             <li><a href="/ventas" class="venta"><i style="margin-right: 13px;" class="fa-solid fa-cart-shopping"></i> Venta</a></li>
+            @if(@Auth::user()->rol == 1)
             <li> <a class="usuarios" href=""><i style="margin-right: 13px;" class="fa-solid fa-users"></i>Administrar Usuarios</a></li>
+            @endif
             <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
               document.getElementById('logout-form').submit();"><i style="margin-right: 13px;" class="fa-solid fa-arrow-right-from-bracket"></i> Salir</a></li>
 

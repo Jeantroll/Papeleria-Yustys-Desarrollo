@@ -63,7 +63,7 @@
     </div>
     <div class="col-md-4">
       <div class="row">
-        <div class="col-md-2" id="pdf" style="display: none;"><button type="button" class="btn btn-success bt-download" style="background: red; font-size: 25px;"><i class="fa-solid fa-file-pdf"></i></button></div>
+        <div class="col-md-2" id="pdf" style="display: none;"><a type="button" href="{{route('productpdf.export')}}" class="btn btn-success bt-download" style="background: red; font-size: 25px;"><i class="fa-solid fa-file-pdf"></i></a></div>
         <div class="col-md-2" id="csv" style="display:none;"><a type="button" href="{{route('product.export')}}" class="btn btn-success bt-download" style="background: #224632; font-size: 25px;"><i class="fa-solid fa-file-csv"></i></a></div>
         <div class="col-md-8"><button type="button" onclick="downloadIcons()" class="btn btn-success bt-download" style="background: #3DCE80;">Descargar inventario <i class="fa-solid fa-download"></i></button></div>
 
@@ -121,12 +121,13 @@
                 <button type="submit" class="btn btn-info" style="color:white; margin-right: 25px;"><i class="fa-solid fa-pen-to-square"></i></button>
               </form>
             </div>
+            @if(@Auth::user()->rol == 1)
             <div class="col-md-6">
               <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="giveQuantity({{$inv->cantidad}},{{$inv->idProducto}});">
                 <i class="fa-solid fa-trash-can"></i>
               </button>
             </div>
-
+            @endif
           </div>
           
       </tr>
@@ -137,7 +138,7 @@
   </table>
 </div>
 
-
+@if(@Auth::user()->rol == 1)
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -167,6 +168,7 @@
     </div>
   </div>
 </div>
+@endif
 
 @if($succes)
 <script>

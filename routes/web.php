@@ -44,6 +44,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('proveedor-creado','App\Http\Controllers\proveedores\proveedoresController@proveedorCreadet');
     Route::post('proveedor-editado','App\Http\Controllers\proveedores\proveedoresController@proveedorEdited');
 
+    //Administrar usuarios
+    Route::get('administrar-usuario', 'App\Http\Controllers\sad@admins');
 
     //Facturas sección
     Route::get('facturas','App\Http\Controllers\factura\facturaController@facturaIndex');
@@ -52,6 +54,15 @@ Route::group(['middleware' => ['auth']], function () {
 
     //Exportar CSV
     Route::get('/product/export','App\Http\Controllers\inventario\inventarioController@exportProductCSV')->name('product.export');
+    Route::get('/facturas/export','App\Http\Controllers\factura\facturaController@exportFactureCSV')->name('facturas.export');
 
+    //Exportar PDF
+    Route::get('/facturas/export/pdf','App\Http\Controllers\factura\facturaController@exportFacturePDF')->name('facturaspdf.export');
+    Route::get('/product/export/pdf','App\Http\Controllers\inventario\inventarioController@exportProductPDF')->name('productpdf.export');
+
+    
+
+
+    
     
 });

@@ -5,6 +5,11 @@ namespace App\Http\Controllers\factura;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Exports\FacturaExport;
+use Maatwebsite\Excel\Facades\Excel;
+use PDF;
+
+
 
 
 class facturaController extends Controller
@@ -112,4 +117,26 @@ class facturaController extends Controller
         return view('venta.factura',['facturaGets'=>$facturaGets,'productsFact'=>$productsFact,'totalNeto'=>$totalNeto]);
 
     }
+
+
+    public function exportFactureCSV(){
+
+        $nombreDocumento = 'facturas papeleria yustys '.Carbon::now().'.xlsx';
+        
+        return Excel::download(new FacturaExport, $nombreDocumento);
+    }
+
+    public function exportFacturePDF(){
+        $factura = \DB::connection('mysql')
+        ->table('factura')
+        ->get();
+
+        $nombreDocumento = 'facturas papeleria yustys '.Carbon::now().'.pdf';
+
+        $pdf = PDF::loadView('exports_blade.facturaExportCSV', ['factura' => $factura]);
+
+        return $pdf->download($nombreDocumento);
+        
+    }
+
 }

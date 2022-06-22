@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
+use PDF;
 
 
 class InventarioController extends Controller
@@ -169,4 +170,20 @@ class InventarioController extends Controller
         
         return Excel::download(new ProductExport, $nombreDocumento);
     }
+
+    public function exportProductPDF(){
+        $inventario = \DB::connection('mysql')
+        ->table('producto')
+        ->join('proveedor','proveedor.idproveedor','=','producto.proveedor_idproveedor')
+        ->get();
+
+        $nombreDocumento = 'productos papeleria yustys '.Carbon::now().'.pdf';
+        
+        $pdf = PDF::loadView('exports_blade.productExportCSV', ['inventario' => $inventario]);
+
+        return $pdf->download($nombreDocumento);
+    
+    }
+    
+    
 }

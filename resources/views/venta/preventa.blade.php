@@ -22,7 +22,7 @@
             <h4>Registrar venta</h4>
             </div>
             <br>
-            <img src="https://s3-alpha-sig.figma.com/img/a22b/8209/d8cbef9e50107c85c2739cde59130c5f?Expires=1653868800&Signature=Th~L-s1wDtDyYlVmSeQY6AFO9ImWh88ZHhDUNYcQZaA87cIARv91Dds3e0GIAXxeZQdDwZ3FlmekG5xMNeLUL5rrkzsK7HXmQnXotqiVhTQ00RurWIpyLCaKAb3TmtK99zadvtrnJAH4ZnAQDbCvW1GaKt9Ttdsjkl2kR3P8CJIThuS2Ako1KpSiHVvMaioRjM40mbzdJa1uuR34aogk1OOYwNJQ-qRVm~-aHRD7rh8y2syrYE7dFJl9oi2JNYteAwOsqNRcqYhjoeQpw2bSDPpvsfdfcul68tnxfcZHla-cu3EtsIYGP-q0pMOLSgLL-fZmEjrKBFJcPyymFTfr5g__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA" alt="">
+            <img style="width: 252px;" src="https://img.freepik.com/vector-gratis/recibo-factura-papel-plano-dibujos-animados-o-factura-pagar-aislado_101884-255.jpg" alt="">
         </div>
         <div class="col-md-7">
             <form action="/preventa" method="POST">

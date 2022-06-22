@@ -25,9 +25,9 @@
             </div>
             <div class="col-md-6">
                 <div class="row">
-                    <div class="col-md-2" id="pdf" style="display: none;"><button type="button" class="btn btn-success bt-download" style="background: red; font-size: 25px;"><i class="fa-solid fa-file-pdf"></i></button></div>
-                    <div class="col-md-2" id="csv" style="display:none;"><a type="button" href="{{route('product.export')}}" class="btn btn-success bt-download" style="background: #224632; font-size: 25px;"><i class="fa-solid fa-file-csv"></i></a></div>
-                    <div class="col-md-8"><button type="button" onclick="downloadIcons()" class="btn btn-success bt-download" style="background: #3DCE80;">Descargar inventario <i class="fa-solid fa-download"></i></button></div>
+                    <div class="col-md-2" id="pdf" style="display: none;"><a type="button" href="{{route('facturaspdf.export')}}" class="btn btn-success bt-download" style="background: red; font-size: 25px;"><i class="fa-solid fa-file-pdf"></i></a></div>
+                    <div class="col-md-2" id="csv" style="display:none;"><a type="button" href="{{route('facturas.export')}}" class="btn btn-success bt-download" style="background: #224632; font-size: 25px;"><i class="fa-solid fa-file-csv"></i></a></div>
+                    <div class="col-md-8"><button type="button" onclick="downloadIcons()" class="btn btn-success bt-download" style="background: #3DCE80;">Generar reporte <i class="fa-solid fa-download"></i></button></div>
             
                   </div>            </div>
         </div>
@@ -88,6 +88,7 @@
                                     <button style="background: #0EC3C7 !important; border-color: #0EC3C7 !important;" type="submit" class="btn btn-primary"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
                                 </form>
                             </div>
+                        @if(@Auth::user()->rol == 1)
                         <div class="col-md-6">
                             <form action="eliminar-factura" method="POST">
                                 @csrf
@@ -96,6 +97,7 @@
                                 <button style="background: #0EC3C7 !important; border-color: #0EC3C7 !important; color: white;" type="submit" class="btn btn-primary"><i class="fa-solid fa-trash-can"></i></button></td>
                             </form>
                         </div>
+                        @endif
                         
                     </div>
 
@@ -156,17 +158,7 @@
             </tbody>
           </table>
     </div>  
-    <br>
-    <div class="row">
-        <div class="col-md-6">
-            <center>
-                <button type="button" class="btn btn-primary" style="font-size:20px; background: #0EBFC4; border-color: #0EBFC4; !important">EMITIR FACTURA</button>
-            </center>
-        </div>
-        <div class="col-md-6">
-                <button type="button" class="btn btn-primary" style="font-size:20px; background: #0EBFC4; border-color: #0EBFC4; !important">REALIZAR OTRA VENTA</button>
-        </div>
-    </div>
+    
 </div>
 
 <script>

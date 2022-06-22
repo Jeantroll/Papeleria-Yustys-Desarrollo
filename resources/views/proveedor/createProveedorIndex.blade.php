@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+@if(@Auth::user()->rol == 1)
 <style>
     #side .items ul li .proveedor{
     background: #59EBF4 !important;
@@ -39,6 +39,9 @@
         
 
 </div>
+@else
+<x-error></x-error>
 
+@endif
 
 @endsection
