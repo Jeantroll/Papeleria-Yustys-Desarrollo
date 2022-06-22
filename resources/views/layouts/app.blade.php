@@ -84,7 +84,6 @@
     <div class="startSections">
         <img src="https://i.ibb.co/jLCdvJW/026518d9-79d7-4994-b6da-445f177a4640.jpg" alt="026518d9-79d7-4994-b6da-445f177a4640" alt="">
         <h1>Bienvenido a la papeleria YUSTYS</h1>
-        <h4>Aquí podras administrar tus productos</h4>
     </div>
     @yield('content')
 </section>
