@@ -72,7 +72,11 @@
             </div>
             </div>
             <div class="person">
+                @if(@Auth::user()->rol == 1)
                 <h4>Administrador</h4>
+                @else
+                <h4>Auxiliar</h4>
+                @endif
                 <p>{{auth()->user()->name}}</p>
             </div>
         </div>
