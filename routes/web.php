@@ -23,12 +23,12 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('inventario-principal','App\Http\Controllers\inventario\inventarioController@inventarioIndex');
-    Route::get('editar-inventario','App\Http\Controllers\inventario\inventarioController@editInventory');
-    Route::get('añadir-producto','App\Http\Controllers\inventario\inventarioController@addProductIndex');
-    Route::post('añadir-producto-inventario','App\Http\Controllers\inventario\inventarioController@addProduct');
-    Route::post('/eliminar-item','App\Http\Controllers\inventario\inventarioController@deleteItem');
-    Route::post('/producto-editado','App\Http\Controllers\inventario\inventarioController@editedProduct');    
+    Route::get('inventario-principal','App\Http\Controllers\inventario\InventarioController@inventarioIndex');
+    Route::get('editar-inventario','App\Http\Controllers\inventario\InventarioController@editInventory');
+    Route::get('añadir-producto','App\Http\Controllers\inventario\InventarioController@addProductIndex');
+    Route::post('añadir-producto-inventario','App\Http\Controllers\inventario\InventarioController@addProduct');
+    Route::post('/eliminar-item','App\Http\Controllers\inventario\InventarioController@deleteItem');
+    Route::post('/producto-editado','App\Http\Controllers\inventario\InventarioController@editedProduct');    
     
     //Venta sección
     Route::get('ventas','App\Http\Controllers\venta\ventaController@ventaIndex');
@@ -53,12 +53,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('factura-print', 'App\Http\Controllers\factura\facturaController@facturaprint');
 
     //Exportar CSV
-    Route::get('/product/export','App\Http\Controllers\inventario\inventarioController@exportProductCSV')->name('product.export');
+    Route::get('/product/export','App\Http\Controllers\inventario\InventarioController@exportProductCSV')->name('product.export');
     Route::get('/facturas/export','App\Http\Controllers\factura\facturaController@exportFactureCSV')->name('facturas.export');
 
     //Exportar PDF
     Route::get('/facturas/export/pdf','App\Http\Controllers\factura\facturaController@exportFacturePDF')->name('facturaspdf.export');
-    Route::get('/product/export/pdf','App\Http\Controllers\inventario\inventarioController@exportProductPDF')->name('productpdf.export');
+    Route::get('/product/export/pdf','App\Http\Controllers\inventario\InventarioController@exportProductPDF')->name('productpdf.export');
 
     
 
