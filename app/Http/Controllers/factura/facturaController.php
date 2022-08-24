@@ -117,6 +117,21 @@ class facturaController extends Controller
         return view('venta.factura',['facturaGets'=>$facturaGets,'productsFact'=>$productsFact,'totalNeto'=>$totalNeto]);
 
     }
+    public function searchFact(Request $request){
+        $succses = false;
+        $numberRad = $request->get('radsearch');
+
+        $factura = \DB::connection('mysql')
+        ->table('factura')
+        ->where('numero_radicacion',$numberRad)
+        ->orwhere('idfactura',$numberRad)
+        ->orderBy('idfactura', 'DESC')
+        ->get();
+        //dd($factura);
+
+        return view('factura.facturaIndex',['factura'=>$factura,'succses'=>$succses]);
+    }
+
 
 
     public function exportFactureCSV(){
@@ -139,4 +154,50 @@ class facturaController extends Controller
         
     }
 
+    public function typeInvoiceIssued(Request $request){
+        $succses = false;
+        $type_fact = $request->get('type_fact');
+
+        if ($type_fact == 1) {
+
+            $factura = \DB::connection('mysql')
+            ->table('factura')
+            ->where('active',1)
+            ->orderBy('idfactura', 'DESC')
+            ->get();
+
+        }elseif ($type_fact == 2) {
+
+            $factura = \DB::connection('mysql')
+            ->table('factura')
+            ->where('active',0)
+            ->orderBy('idfactura', 'DESC')
+            ->get();
+
+        }elseif ($type_fact == 3) {
+
+            $factura = \DB::connection('mysql')
+            ->table('factura')
+            ->where('active',2)
+            ->orderBy('idfactura', 'DESC')
+            ->get();
+
+        }else{
+
+            $factura = \DB::connection('mysql')
+            ->table('factura')
+            ->orderBy('idfactura', 'DESC')
+            ->get();
+            
+        }
+
+        
+
+
+        return view('factura.facturaIndex',['factura'=>$factura,'succses'=>$succses]);
+
+        
+    }
+
+   
 }

@@ -334,4 +334,6 @@ class ventaController extends Controller
             "data" => $productsPre
         ], 200);
     }
+
+    
 }

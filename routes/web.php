@@ -45,12 +45,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('proveedor-editado','App\Http\Controllers\proveedores\proveedoresController@proveedorEdited');
 
     //Administrar usuarios
-    Route::get('administrar-usuario', 'App\Http\Controllers\sad@admins');
+    Route::get('administrar-usuario', 'App\Http\Controllers\users\usersController@admins');
+    Route::post('editar-usuario', 'App\Http\Controllers\users\usersController@userEdited');
+    Route::post('delete-user', 'App\Http\Controllers\users\usersController@userDelete');
 
+    
     //Facturas sección
     Route::get('facturas','App\Http\Controllers\factura\facturaController@facturaIndex');
     Route::post('eliminar-factura', 'App\Http\Controllers\factura\facturaController@cancelFactura');
     Route::post('factura-print', 'App\Http\Controllers\factura\facturaController@facturaprint');
+    Route::post('buscar-factura', 'App\Http\Controllers\factura\facturaController@searchFact');
+    Route::post('facturas-emitidas','App\Http\Controllers\factura\facturaController@typeInvoiceIssued');
 
     //Exportar CSV
     Route::get('/product/export','App\Http\Controllers\inventario\InventarioController@exportProductCSV')->name('product.export');

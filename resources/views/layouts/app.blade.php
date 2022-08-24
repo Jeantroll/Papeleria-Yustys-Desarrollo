@@ -17,6 +17,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="library/bootstrap-5/bootstrap.min.css" rel="stylesheet" />
         <script src="library/bootstrap-5/bootstrap.bundle.min.js"></script>
         <link rel="stylesheet" href="https://unpkg.com/@jarstone/dselect/dist/css/dselect.css">
@@ -34,8 +35,9 @@
 
     </div>
     <div class="items">
-        <ul>
+        <ul> 
             <li><p>Pages</p></li>
+            @if(@Auth::user()->rol == 1 || @Auth::user()->rol == 0)
 
             <li><a href="/inventario-principal" class="inventario"><i style="margin-right: 13px;" class="fa-solid fa-boxes-stacked"></i> Inventario</a></li>
             <li><a href="/proveedores" class="proveedor"><i style="margin-right: 13px;" class="fa-solid fa-truck-field"></i> Proveedores</a></li>
@@ -43,7 +45,8 @@
             <li><a href="/facturas" class="factura"><i style="margin-right: 18px;" class="fa-solid fa-file-invoice-dollar"></i> Factura</a></li>
             <li><a href="/ventas" class="venta"><i style="margin-right: 13px;" class="fa-solid fa-cart-shopping"></i> Venta</a></li>
             @if(@Auth::user()->rol == 1)
-            <li> <a class="usuarios" href=""><i style="margin-right: 13px;" class="fa-solid fa-users"></i>Administrar Usuarios</a></li>
+            <li> <a class="usuarios" href="administrar-usuario"><i style="margin-right: 13px;" class="fa-solid fa-users"></i>Administrar Usuarios</a></li>
+            @endif
             @endif
             <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
               document.getElementById('logout-form').submit();"><i style="margin-right: 13px;" class="fa-solid fa-arrow-right-from-bracket"></i> Salir</a></li>
@@ -83,9 +86,18 @@
     </div>
     <div class="startSections">
         <img src="https://i.ibb.co/jLCdvJW/026518d9-79d7-4994-b6da-445f177a4640.jpg" alt="026518d9-79d7-4994-b6da-445f177a4640" alt="">
+        @if(@Auth::user()->rol == 1 || @Auth::user()->rol == 0)
+
         <h1>Bienvenido a la papeleria YUSTYS</h1>
+        @else
+        <h1>Por favor esperar a que el administrador te de acceso a los modulos</h1>
+        @endif
+
     </div>
+    @if(@Auth::user()->rol == 1 || @Auth::user()->rol == 0)
+
     @yield('content')
+    @endif
 </section>
 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none" name="exit">
   @csrf
