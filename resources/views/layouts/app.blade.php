@@ -27,7 +27,7 @@
     <div class="logo">
     <center>
         <img src="https://i.ibb.co/GQq4kNr/e558a424-10c4-43c2-846d-5d35fc76c6b3.png" alt="e558a424-10c4-43c2-846d-5d35fc76c6b3" border="0">
-        <a class="btn btn-primary" href="">Dashboard</a>
+        <a class="btn btn-primary" href="{{ route('home') }}">Home</a>
     </center>
     </div>
 
@@ -56,7 +56,7 @@
 
     <div class="items" style="margin-top: 100px;">
         <ul>
-            <li><a href=""><i style="margin-right: 13px;" class="fa-solid fa-screwdriver-wrench"></i> Soporte tecnico</a></li>
+            <li><a href="mailto:jpramirez6010@misena.edu.co"><i style="margin-right: 13px;" class="fa-solid fa-screwdriver-wrench"></i> Soporte tecnico</a></li>
         </ul>
     </div>
 
@@ -77,8 +77,10 @@
             <div class="person">
                 @if(@Auth::user()->rol == 1)
                 <h4>Administrador</h4>
-                @else
+                @elseif (@Auth::user()->rol == 0)
                 <h4>Auxiliar</h4>
+                @else
+                <h4 style="color: rgb(209, 38, 38);">Primer login</h4>
                 @endif
                 <p>{{auth()->user()->name}}</p>
             </div>

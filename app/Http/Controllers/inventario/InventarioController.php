@@ -13,7 +13,12 @@ use PDF;
 class InventarioController extends Controller
 {
     public function inventarioIndex(Request $request){
-        $succes = false;
+        $succesEdit = false;
+        $succesDelete = false;
+        $succesAdd = false; 
+        $error = false;    
+        $all = false;            
+          
         $msg = "";
         $inventario = \DB::connection('mysql')
         ->table('producto')
@@ -22,7 +27,7 @@ class InventarioController extends Controller
 
         //dd($inventario);
 
-        return view('inventario/inventarios',['msg'=>$msg,'succes'=>$succes,'inventario'=>$inventario]);
+        return view('inventario/inventarios',['all'=>$all,'msg'=>$msg,'error'=>$error,'succesEdit'=>$succesEdit,'succesDelete'=>$succesDelete,'succesAdd'=>$succesAdd,'inventario'=>$inventario]);
     }
 
     public function editInventory(Request $request){
@@ -48,8 +53,13 @@ class InventarioController extends Controller
     }
 
     public function editedProduct(Request $request){
-        $succes = true;
-        $msg = "El producto ha sido editado";
+        $succesEdit = true;
+        $succesDelete = false;
+        $succesAdd = false;
+         $msg = "";
+         $error = false;   
+         $all = false;            
+    
 
         //Obtener los datos de los inputs
         $product = $request->get('product');
@@ -80,7 +90,7 @@ class InventarioController extends Controller
 
         //dd($inventario);
 
-        return view('inventario/inventarios',['msg'=>$msg,'succes'=>$succes,'inventario'=>$inventario]);
+        return view('inventario/inventarios',['all'=>$all,'msg'=>$msg,'error'=>$error,'succesEdit'=>$succesEdit,'succesDelete'=>$succesDelete,'succesAdd'=>$succesAdd,'inventario'=>$inventario]);
     }
 
     public function addProductIndex(){
@@ -94,7 +104,12 @@ class InventarioController extends Controller
     }
 
     public function addProduct(Request $request){
-        $succes = true;
+        $succesEdit = false;
+        $succesDelete = false;
+        $succesAdd = true; 
+        $error = false;     
+        $all = false;            
+  
         $msg = "El producto ha sido agregado";
 
         //Obtener los datos de los inputs
@@ -104,17 +119,32 @@ class InventarioController extends Controller
         $precio = $request->get('precio');
         $proveedor = $request->get('proveedor');
 
-        //Insertar nuevo producto
-
-        $productAdd = \DB::connection('mysql')
+        //Validar si existe el producto
+        $validate = \DB::connection('mysql')
         ->table('producto')
-        ->insert([
-            'nombre' =>$product,
-            'marca' => $marca,
-            'cantidad' => $cantidad,
-            'precio' => $precio,
-            'proveedor_idproveedor' => $proveedor
-        ]);
+        ->where('nombre',$product)
+        ->where('marca',$marca)
+        ->where('cantidad',$cantidad)
+        ->where('precio',$precio)
+        ->get();
+
+        if(sizeof($validate) > 0){
+        $error = true;
+        $succesAdd = false; 
+
+        }else{
+            //Insertar nuevo producto
+            $productAdd = \DB::connection('mysql')
+            ->table('producto')
+            ->insert([
+                'nombre' =>$product,
+                'marca' => $marca,
+                'cantidad' => $cantidad,
+                'precio' => $precio,
+                'proveedor_idproveedor' => $proveedor
+            ]);
+        }
+        
 
         //retornar vista y obtener datos
         $inventario = \DB::connection('mysql')
@@ -124,15 +154,20 @@ class InventarioController extends Controller
 
         //dd($inventario);
 
-        return view('inventario/inventarios',['msg'=>$msg,'succes'=>$succes,'inventario'=>$inventario]);
+        return view('inventario/inventarios',['all'=>$all,'msg'=>$msg,'error'=>$error,'succesEdit'=>$succesEdit,'succesDelete'=>$succesDelete,'succesAdd'=>$succesAdd,'inventario'=>$inventario]);
     }
 
     public function deleteItem(Request $request){
-        $succes = true;
-        $msg = "El item del producto a sido modificado";
+        $succesEdit = false;
+        $succesDelete = true;
+        $succesAdd = false;
+        $error = false;    
+        $all = false;            
+   
+
+        $msg = "";
 
         //Obtener los datos de los inputs
-        $cantidad = $request->get('quantitys');
         $id = $request->get('idProduct');
         
         //Editar item del producto
@@ -142,24 +177,37 @@ class InventarioController extends Controller
         ->join('proveedor','proveedor.idproveedor','=','producto.proveedor_idproveedor')
         ->get();
 
-        if($cantidad >= 0){
-            $itemDelete = \DB::connection('mysql')
-            ->table('producto')
-            ->where('idProducto',$id)
-            ->update([
-                'cantidad' => $cantidad,
-            ]);
-        }else{
-            $msg = "Has escogido un valor negativo... Por favor revalida los datos con un valor positivo. Ejemplo: 1,2,3,4,5,6";
-            
+        $itemDelete = \DB::connection('mysql')
+        ->table('producto')
+        ->where('idProducto',$id)
+        ->delete();
 
-            return view('inventario/inventarios',['msg'=>$msg,'inventario'=>$inventario]);
-        }
         //retornar vista y obtener datos
-        return view('inventario/inventarios',['msg'=>$msg,'succes'=>$succes,'inventario'=>$inventario]);
+        return view('inventario/inventarios',['all'=>$all,'msg'=>$msg,'error'=>$error,'succesEdit'=>$succesEdit,'succesDelete'=>$succesDelete,'succesAdd'=>$succesAdd,'inventario'=>$inventario]);
     }
 
 
+    public function filterProduct(Request $request){
+        $succesEdit = false;
+        $succesDelete = false;
+        $succesAdd = false; 
+        $error = false;  
+        $all = true;            
+        $msg = "";
+        $filters = $request->get('prodsearch');
+
+
+        $inventario = \DB::connection('mysql')
+        ->table('producto')
+        ->join('proveedor','proveedor.idproveedor','=','producto.proveedor_idproveedor')
+        ->where('producto.idProducto',$filters)
+        ->orwhere('producto.nombre',$filters)
+        ->get();
+
+        //dd($inventario);
+
+        return view('inventario/inventarios',['all'=>$all,'msg'=>$msg,'error'=>$error,'succesEdit'=>$succesEdit,'succesDelete'=>$succesDelete,'succesAdd'=>$succesAdd,'inventario'=>$inventario]);
+    }
 
 
     //Exportar productos mediante CSV y EXCEL con la libreria Laravel-Excel

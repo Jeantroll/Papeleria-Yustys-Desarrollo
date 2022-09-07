@@ -36,15 +36,6 @@
 }
 
 </style>
-@if($msg != '')
-	<div class="row">
-		<div class="col-md-12">
-			<div class="alert alert-danger alert-dismissible fade show" role="alert">
-				{{$msg}}
-			</div>
-		</div>
-	</div>
-	@endif
 <div class="tableDivInventario">
 <div class="headerInventario">
   <div class="row">
@@ -63,22 +54,44 @@
     </div>
     <div class="col-md-4">
       <div class="row">
-        <div class="col-md-2" id="pdf" style="display: none;"><a type="button" href="{{route('productpdf.export')}}" class="btn btn-success bt-download" style="background: red; font-size: 25px;"><i class="fa-solid fa-file-pdf"></i></a></div>
-        <div class="col-md-2" id="csv" style="display:none;"><a type="button" href="{{route('product.export')}}" class="btn btn-success bt-download" style="background: #224632; font-size: 25px;"><i class="fa-solid fa-file-csv"></i></a></div>
-        <div class="col-md-8"><button type="button" onclick="downloadIcons()" class="btn btn-success bt-download" style="background: #3DCE80;">Descargar inventario <i class="fa-solid fa-download"></i></button></div>
-
+        <div class="col-md-1" id="pdf" style="display: none;"><a type="button" href="{{route('productpdf.export')}}" class="btn btn-success bt-download" style="background: red; font-size: 25px;"><i class="fa-solid fa-file-pdf"></i></a></div>
+        <div class="col-md-1" id="csv" style="display:none;"><a type="button" href="{{route('product.export')}}" class="btn btn-success bt-download" style="background: #224632; font-size: 25px;"><i class="fa-solid fa-file-csv"></i></a></div>
+        <div class="col-md-4"><button type="button" onclick="downloadIcons()" class="btn btn-success bt-download" style="background: #3DCE80;">Descargar inventario <i class="fa-solid fa-download"></i></button></div>
       </div>
   </div>
+  <div class="col-md-6">
+    <br>
+    <br>
+
+    <form class="row" action="/buscar-producto" method="post">
+        @csrf
+        <div class="col-md-9">
+          <input type="text" name="prodsearch" class="form-control" placeholder="Buscar por nombre o id">
+        </div>
+        <div class="col-md-3">
+          <button class="btn btn-success" type="submit"> buscar</button>
+        </div>
+    </form>
+    <br>
+    @if ($all)
+    <a href="/inventario-principal" class="btn btn-success">MOSTRAR TODOS</a>
+    @endif
+
+    @if ($succesEdit || $succesDelete || $succesAdd)
+    <a href="/inventario-principal" class="btn btn-success">RECARGAR</a>
+    @endif
+
+</div>
   </div>
  
 </div>
 
-<table class="table">
+<table class="table" id= "tablax">
     <thead>
       <tr>
         <th scope="col">Id</th>
         <th scope="col">Nombre</th>
-        <th scope="col">Marca</th>
+        <th scope="col">Categoria</th>
         <th scope="col">Cantidad</th>
         <th scope="col">Precio</th>
         <th scope="col">Nombre del proveedor</th>
@@ -123,9 +136,13 @@
             </div>
             @if(@Auth::user()->rol == 1)
             <div class="col-md-6">
-              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="giveQuantity({{$inv->cantidad}},{{$inv->idProducto}});">
-                <i class="fa-solid fa-trash-can"></i>
-              </button>
+              <form action="/eliminar-item" method="POST">
+                @csrf
+                <input type="hidden" name="idProduct" value="{{$inv->idProducto}}">
+                <button type="submit" class="btn btn-danger">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </form>
             </div>
             @endif
           </div>
@@ -136,6 +153,9 @@
       @endforeach
     </tbody>
   </table>
+  <div class="pagination">
+    <ol id="numbers" style="display: flex;"></ol>
+</div>
 </div>
 
 @if(@Auth::user()->rol == 1)
@@ -169,23 +189,93 @@
   </div>
 </div>
 @endif
-
-@if($succes)
+@if($error)
 <script>
-    window.location.replace("/inventario-principal");
+  Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'El producto ya ha sido creado!'
+})
 </script>  
 @endif
-
+@if($succesEdit)
 <script>
-
-function clickeds() {
   Swal.fire(
-  'Good job!',
-  'You clicked the button!',
-  'success',
+    'Producto editado!',
+    'Tu producto ha sido editado correctamente',
+    'success'
   )
-}
+</script>  
+@endif
+@if($succesDelete)
+<script>
+  Swal.fire(
+    'Producto eliminado!',
+    'Tu producto ha sido eliminado correctamente',
+    'success'
+  )
+</script>  
+@endif
+@if($succesAdd)
+<script>
+  Swal.fire(
+    'Producto agregado!',
+    'Tu producto ha sido agregado correctamente',
+    'success'
+  )
+</script>  
+@endif
+<script>
+  $(function() {
+	const rowsPerPage = 10;
+	const rows = $('#tablax tbody tr');
+	const rowsCount = rows.length;
+	const pageCount = Math.ceil(rowsCount / rowsPerPage); // avoid decimals
 
+
+	const numbers = $('#numbers');
+
+	// Generate the pagination.
+
+    for (var i = 0; i < pageCount; i++) {
+		numbers.append('<ul class="pagination pagination-sm"><li class="page-item"><a style="background: #af0b10; color: white;" class="page-link" href="#">' + (i+1) + '</a></li>  </ul>');
+	  }
+
+
+	// Mark the first page link as active.
+	$('#numbers li:first-child a').addClass('active');
+
+	// Display the first set of rows.
+	displayRows(1);
+
+	// On pagination click.
+	$('#numbers li a').click(function(e) {
+		var $this = $(this);
+
+		e.preventDefault();
+
+		// Remove the active class from the links.
+		$('#numbers li a').removeClass('active');
+
+		// Add the active class to the current link.
+		$this.addClass('active');
+
+		// Show the rows corresponding to the clicked page ID.
+		displayRows($this.text());
+	});
+
+	// Function that displays rows for a specific page.
+	function displayRows(index) {
+		var start = (index - 1) * rowsPerPage;
+		var end = start + rowsPerPage;
+
+		// Hide all rows.
+		rows.hide();
+
+		// Show the proper rows for this page.
+		rows.slice(start, end).show();
+	}
+});
 function giveQuantity(quantity, id) {
   document.getElementById('quantity').value = quantity;
   document.getElementById('idProduct').value = id;

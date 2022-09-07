@@ -21,7 +21,7 @@
               <br>
               <div class="row g-12 align-items-center">
                 <div class="col-md-2">
-                  <label for="marca" class="col-form-label">Marca</label>
+                  <label for="marca" class="col-form-label">Categoria</label>
                 </div>
                 <div class="col-md-10">
                   <input type="text" id="marca" class="form-control" name="marca" value="{{$invEdit->marca}}" required>

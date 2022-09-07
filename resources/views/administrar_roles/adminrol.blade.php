@@ -46,6 +46,11 @@
   color: red;
   cursor: pointer;
 }
+
+#side .items ul li .usuarios{
+    background: #59EBF4 !important;
+    color: white !important;
+}
 </style>
 
 
@@ -73,9 +78,7 @@
     <h1>Usuarios listados</h1>
     <p>En esta sección puedes editar el rol de todos los usuarios</p>
   </center>
-  @endif
-<input type="date" name="" id="">
-  
+  @endif  
   <div class="row">
         @foreach ($users as $us)
         <div class="col-md-12 col-lg-6">

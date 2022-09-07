@@ -29,7 +29,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('añadir-producto-inventario','App\Http\Controllers\inventario\InventarioController@addProduct');
     Route::post('/eliminar-item','App\Http\Controllers\inventario\InventarioController@deleteItem');
     Route::post('/producto-editado','App\Http\Controllers\inventario\InventarioController@editedProduct');    
-    
+    Route::post('/buscar-producto','App\Http\Controllers\inventario\InventarioController@filterProduct');
+
     //Venta sección
     Route::get('ventas','App\Http\Controllers\venta\ventaController@ventaIndex');
     Route::post('crear-venta','App\Http\Controllers\venta\ventaController@generatePurchase');
