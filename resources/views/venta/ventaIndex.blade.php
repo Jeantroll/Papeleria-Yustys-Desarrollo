@@ -115,11 +115,11 @@ let headers = new Headers();
       
       if(idprod == null && cantidad == null){
           //var ajaxurl = "http://23.21.176.114/api/sumar-producto/0/0";
-          var ajaxurl = "http://http://3.88.154.3//api/sumar-producto/0/0";
+          var ajaxurl = "http://3.88.154.3/api/sumar-producto/0/0";
 
       }else{
           //var ajaxurl = "http://23.21.176.114/api/sumar-producto/"+idprod+"/"+cantidad;
-          var ajaxurl = "http://http://3.88.154.3//api/sumar-producto/"+idprod+"/"+cantidad;
+          var ajaxurl = "http://3.88.154.3/api/sumar-producto/"+idprod+"/"+cantidad;
 
       }
 

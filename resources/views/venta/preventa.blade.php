@@ -136,9 +136,9 @@ dselect(select_box_element, {
         let headers = new Headers();
           
           if(idfactura == null){
-              var ajaxurl = "http://http://3.88.154.3//api/productopre/0";
+              var ajaxurl = "http://3.88.154.3/api/productopre/0";
           }else{
-              var ajaxurl = "http://http://3.88.154.3//api/productopre/"+idfactura;
+              var ajaxurl = "http://3.88.154.3/api/productopre/"+idfactura;
           }
     
           fetch(ajaxurl, {
@@ -175,9 +175,9 @@ dselect(select_box_element, {
     let headers = new Headers();
           
           if(idprod == null && cantidad == null){
-              var ajaxurl = "http://http://3.88.154.3//api/sumar-producto/0/0";
+              var ajaxurl = "http://3.88.154.3/api/sumar-producto/0/0";
           }else{
-              var ajaxurl = "http://http://3.88.154.3//api/sumar-producto/"+idprod+"/"+cantidad;
+              var ajaxurl = "http://3.88.154.3/api/sumar-producto/"+idprod+"/"+cantidad;
           }
     
           fetch(ajaxurl, {
