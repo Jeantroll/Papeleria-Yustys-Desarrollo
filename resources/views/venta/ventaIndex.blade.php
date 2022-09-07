@@ -45,7 +45,7 @@
             <select name="Idproduct" onchange="parseCantidad()" id="idProd" class="w-50 h-22 form-select">
 
                 @foreach ($producto as $pr)
-                <option value="{{$pr->idProducto }}">{{$pr->nombre}}</option>
+                <option value="{{$pr->idProducto }}">{{$pr->nombre}} - {{$pr->marca}} </option>
                 @endforeach
               </select>
               
