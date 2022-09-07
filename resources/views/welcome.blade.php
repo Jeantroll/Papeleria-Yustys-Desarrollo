@@ -84,13 +84,19 @@
             </div>
 
           <ul class="navbar-nav">
-
+            @if(@Auth::user()->rol == 1 || @Auth::user()->rol == 0 || @Auth::user()->rol == 2)
+            <li class="nav-item">
+              <a class="nav-link" style=" color: black;" href="{{ route('home') }}">Ingresar</a>
+            </li>
+            @else
             <li class="nav-item">
               <a class="nav-link" style=" color: black;" href="{{ route('login') }}">Iniciar sesion</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" style=" color: black;" href="{{ route('register') }}">Registrarse</a>
             </li>
+            @endif
+            
           </ul>
 
 
