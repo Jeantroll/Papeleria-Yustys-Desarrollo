@@ -84,7 +84,7 @@
             </div>
 
           <ul class="navbar-nav">
-            @if(@Auth::user()->rol == 1 || @Auth::user()->rol == 0 || @Auth::user()->rol == 2)
+            @if(@Auth::user())
             <li class="nav-item">
               <a class="nav-link" style=" color: black;" href="{{ route('home') }}">Ingresar</a>
             </li>
